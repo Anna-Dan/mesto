@@ -5,3 +5,11 @@
   justify-content: space-between;
   align-items: center;
 }
+
+@media screen and (max-width: 680px) {
+  .profile {
+    margin-bottom: 36px;
+    margin-top: 42px;
+    flex-direction: column;
+  }
+}

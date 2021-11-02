@@ -5,3 +5,15 @@
   margin-bottom: 41px;
   padding: 0;
 }
+
+@media screen and (max-width: 900px) {
+  .header__logo {
+    margin: 0 0 31.6px 27px;
+  }
+}
+@media screen and (max-width: 680px) {
+  .header__logo {
+    width: 103.74px;
+    height: 24.4px;
+  }
+}
