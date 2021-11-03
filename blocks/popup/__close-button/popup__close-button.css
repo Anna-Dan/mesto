@@ -6,6 +6,7 @@
   border: none;
   box-sizing: border-box;
   background-position: center;
+  background-size: contain;
   background-repeat: no-repeat;
   background-color: transparent;
   position: absolute;
@@ -19,14 +20,16 @@
   cursor: pointer;
 }
 
-.popup__close:focus {
+.popup__close-button:focus {
   outline: none;
 }
 
-@media (max-width: 768px) {
-  .popup__close {
-    width: 30px;
-    height: 30px;
+@media (max-width: 780px) {
+  .popup__close-button {
+    width: 20px;
+    height: 20px;
+    top: -35px;
     right: 0;
+
   }
 }
