@@ -5,17 +5,18 @@
   border-radius: 10px;
   box-sizing: border-box;
   min-height: 330px;
-  padding: 34px 36px 37px;
+  padding: 34px 36px;
   max-width: 430px;
   width: 100%;
   margin: 0 5px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
 }
 
 @media (max-width: 780px) {
   .popup__container {
     padding: 25px 22px;
     max-width: 282px;
+    min-height: 322px;
   }
 }

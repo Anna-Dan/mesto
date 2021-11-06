@@ -7,3 +7,9 @@
   grid-gap: 20px 17px;
   list-style: none;
 }
+
+@media screen and (max-width: 720px) {
+  .elements__list {
+    grid-gap: 20.5px;
+  }
+}

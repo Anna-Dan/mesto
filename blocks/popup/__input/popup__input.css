@@ -7,7 +7,7 @@
   box-sizing: border-box;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   margin: 0 0 30px 0;
-  padding: 0 0 13px 0;
+  padding: 0 0 10px 0;
   width: 100%;
   color: #000000;
 }
@@ -23,5 +23,11 @@
 @media (max-width: 780px) {
   .popup__input:last-of-type {
     margin-bottom: 45px;
+  }
+}
+
+@media (max-width: 780px) {
+  .popup__input {
+    padding: 0 0 9px 0;
   }
 }
