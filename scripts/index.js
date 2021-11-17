@@ -20,7 +20,9 @@ const addButton = profile.querySelector(".profile__add-button");
 const editButton = profile.querySelector(".profile__edit-button");
 const profileName = profile.querySelector(".profile__name");
 const profileDescription = profile.querySelector(".profile__description");
-
+// Карточка
+const elementsList = document.querySelector(".elements__list");
+const cardTemplate = document.querySelector(".template-card");
 // Функция открытие попапа
 function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
@@ -30,7 +32,7 @@ function closePopup(popupElement) {
   popupElement.classList.remove("popup_opened");
 }
 
-//  Edit popup
+//  EDIT POPUP
 // Заполнение данными со страницы при открытии формы редактирования профиля
 nameInput.value = profileName.textContent;
 jobInput.value = profileDescription.textContent;
@@ -55,7 +57,7 @@ function formSubmitHandler(evt) {
 // Сохранить данные пользователя
 formEditElement.addEventListener("submit", formSubmitHandler);
 
-// Add popup
+// ADD POPUP
 // Открыть попап добавления карточки места
 addButton.addEventListener("click", () => {
   openPopup(popupAddElement);
@@ -67,20 +69,20 @@ closeAddButton.addEventListener("click", () => {
 });
 
 // Обработчик сохранения карточки места
-function formAddSubmitHandler(evt) {
+function addCard(evt) {
   evt.preventDefault();
   const userCardElement = createElementDomNode({
     name: placeInput.value,
     link: urlInput.value,
   });
   elementsList.prepend(userCardElement);
-  placeInput.value = '';
-  urlInput.value = '';
+  placeInput.value = "";
+  urlInput.value = "";
   closePopup(popupAddElement);
 }
 
 // Сохранить карточку места
-formAddElement.addEventListener("submit", formAddSubmitHandler);
+formAddElement.addEventListener("submit", addCard);
 
 // Первоначальное отображение 6 карточек
 const initialCards = [
@@ -110,9 +112,6 @@ const initialCards = [
   },
 ];
 
-const elementsList = document.querySelector(".elements__list");
-const cardTemplate = document.querySelector(".template-card");
-
 const createElementDomNode = (item) => {
   const cardElement = cardTemplate.content
     .querySelector(".elements__card")
@@ -120,6 +119,12 @@ const createElementDomNode = (item) => {
 
   cardElement.querySelector(".elements__image").src = item.link;
   cardElement.querySelector(".elements__title").textContent = item.name;
+  // Лайк
+  cardElement
+    .querySelector(".elements__like-button")
+    .addEventListener("click", (evt) => {
+      evt.target.classList.toggle("elements__like-button_active");
+    });
 
   return cardElement;
 };
