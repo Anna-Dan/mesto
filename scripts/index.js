@@ -106,14 +106,14 @@ closeEditButton.addEventListener("click", () => {
 });
 
 // Обработчик сохранения данных пользователя
-function formSubmitHandler(evt) {
+function editSubmitHandler(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
   closePopup(popupEditElement);
 }
 // Сохранить данные пользователя
-formEditElement.addEventListener("submit", formSubmitHandler);
+formEditElement.addEventListener("submit", editSubmitHandler);
 
 // ADD POPUP
 // Открыть попап добавления карточки места
@@ -127,7 +127,7 @@ closeAddButton.addEventListener("click", () => {
 });
 
 // Обработчик сохранения карточки места
-function addCard(evt) {
+function addSubmitHandler(evt) {
   evt.preventDefault();
   const userCardElement = createElementDomNode({
     name: placeInput.value,
@@ -140,4 +140,4 @@ function addCard(evt) {
 }
 
 // Сохранить карточку места
-formAddElement.addEventListener("submit", addCard);
+formAddElement.addEventListener("submit", addSubmitHandler);
