@@ -23,6 +23,64 @@ const profileDescription = profile.querySelector(".profile__description");
 // Карточка
 const elementsList = document.querySelector(".elements__list");
 const cardTemplate = document.querySelector(".template-card");
+
+// Первоначальное отображение 6 карточек
+const initialCards = [
+  {
+    name: "Архыз",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
+  },
+  {
+    name: "Челябинская область",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
+  },
+  {
+    name: "Иваново",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
+  },
+  {
+    name: "Камчатка",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
+  },
+  {
+    name: "Холмогорский район",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
+  },
+  {
+    name: "Байкал",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
+  },
+];
+
+const createElementDomNode = (item) => {
+  const cardElement = cardTemplate.content
+    .querySelector(".elements__card")
+    .cloneNode(true);
+
+  cardElement.querySelector(".elements__image").src = item.link;
+  cardElement.querySelector(".elements__title").textContent = item.name;
+  // Лайк
+  cardElement
+    .querySelector(".elements__like-button")
+    .addEventListener("click", (evt) => {
+      evt.target.classList.toggle("elements__like-button_active");
+    });
+  // Удаление
+  cardElement
+    .querySelector(".elements__delete-button")
+    .addEventListener("click", () => {
+      cardElement.remove();
+    });
+
+  return cardElement;
+};
+
+const initialRendering = initialCards.map((item) => {
+  return createElementDomNode(item);
+});
+
+elementsList.append(...initialRendering);
+
 // Функция открытие попапа
 function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
@@ -83,54 +141,3 @@ function addCard(evt) {
 
 // Сохранить карточку места
 formAddElement.addEventListener("submit", addCard);
-
-// Первоначальное отображение 6 карточек
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-
-const createElementDomNode = (item) => {
-  const cardElement = cardTemplate.content
-    .querySelector(".elements__card")
-    .cloneNode(true);
-
-  cardElement.querySelector(".elements__image").src = item.link;
-  cardElement.querySelector(".elements__title").textContent = item.name;
-  // Лайк
-  cardElement
-    .querySelector(".elements__like-button")
-    .addEventListener("click", (evt) => {
-      evt.target.classList.toggle("elements__like-button_active");
-    });
-
-  return cardElement;
-};
-
-const initialRendering = initialCards.map((item) => {
-  return createElementDomNode(item);
-});
-
-elementsList.append(...initialRendering);
