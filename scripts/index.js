@@ -1,21 +1,35 @@
-const popupElement = document.querySelector(".popup");
-const closeButton = popupElement.querySelector(".popup__close-button");
-const saveButton = popupElement.querySelector(".popup__save-button");
-const profile = document.querySelector("profile");
-const editButton = document.querySelector(".profile__edit-button");
-const profileName = document.querySelector(".profile__name");
-const profileDescription = document.querySelector(".profile__description");
-const formElement = document.querySelector(".popup__form");
-const nameInput = formElement.querySelector(".popup__input_type_name");
-const jobInput = formElement.querySelector(".popup__input_type_description");
-// Открытие попапа
-function openPopup() {
+// Edit popup
+const popupEditElement = document.querySelector(".popup_type_edit");
+const closeEditButton = popupEditElement.querySelector(".popup__close-button");
+const saveEditButton = popupEditElement.querySelector(".popup__save-button");
+const formEditElement = document.querySelector(".popup__form_type_edit");
+const nameInput = formEditElement.querySelector(".popup__input_type_name");
+const jobInput = formEditElement.querySelector(".popup__input_type_description");
+// Add popup
+const popupAddElement = document.querySelector(".popup_type_add");
+const closeAddButton = popupAddElement.querySelector(".popup__close-button");
+const saveAddButton = popupAddElement.querySelector(".popup__save-button");
+const formAddElement = document.querySelector(".popup__form_type_add");
+const placeInput = formAddElement.querySelector(".popup__input_type_place");
+const urlInput = formAddElement.querySelector(".popup__input_type_url");
+
+// Профиль
+const profile = document.querySelector(".profile");
+const addButton = profile.querySelector(".profile__add-button");
+const editButton = profile.querySelector(".profile__edit-button");
+const profileName = profile.querySelector(".profile__name");
+const profileDescription = profile.querySelector(".profile__description");
+
+// Заполнение данными со страницы при открытии формы редактирования профиля
+nameInput.value = profileName.textContent;
+jobInput.value = profileDescription.textContent;
+
+// Функция открытие попапа
+function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileDescription.textContent;
 }
-// Закрытие попапа
-function closePopup() {
+// Функция закрытие попапа
+function closePopup(popupElement) {
   popupElement.classList.remove("popup_opened");
 }
 // Обработчик сохранения данных пользователя
@@ -23,12 +37,30 @@ function formSubmitHandler(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
-  closePopup();
+  closePopup(popupEditElement);
 }
+// Сохранить данные пользователя
+formEditElement.addEventListener("submit", formSubmitHandler);
 
-formElement.addEventListener("submit", formSubmitHandler);
-editButton.addEventListener("click", openPopup);
-closeButton.addEventListener("click", closePopup);
+// Открыть попап редактирования профиля
+editButton.addEventListener("click", () => {
+  openPopup(popupEditElement);
+});
+
+// Закрыть попап редактирования профиля
+closeEditButton.addEventListener("click", () => {
+  closePopup(popupEditElement);
+});
+
+// Открыть попап добавления места
+addButton.addEventListener("click", () => {
+  openPopup(popupAddElement);
+});
+
+// Закрыть попап добавления места
+closeAddButton.addEventListener("click", () => {
+  closePopup(popupAddElement);
+});
 
 // Первоначальное отображение 6 карточек
 const initialCards = [

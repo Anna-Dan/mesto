@@ -48,7 +48,8 @@
       <footer class="footer">
         <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
       </footer>
-      <div class="popup">
+      <!-- Edit popup -->
+      <div class="popup popup_type_edit">
         <div class="popup__container">
           <button
             class="popup__close-button"
@@ -57,7 +58,7 @@
             aria-label="Закрыть"
           ></button>
           <h2 class="popup__title">Редактировать профиль</h2>
-          <form class="popup__form" name="user-info">
+          <form class="popup__form popup__form_type_edit" name="user-info">
             <fieldset class="popup__fieldset">
               <input
                 type="text"
@@ -86,7 +87,43 @@
           </form>
         </div>
       </div>
+      <!-- Add popup -->
+      <div class="popup popup_type_add">
+        <div class="popup__container">
+          <button
+            class="popup__close-button"
+            type="button"
+            title="Закрыть окно"
+            aria-label="Закрыть"
+          ></button>
+          <h2 class="popup__title">Новое место</h2>
+          <form class="popup__form popup__form_type_add" name="new-place">
+            <fieldset class="popup__fieldset">
+              <input
+                type="text"
+                class="popup__input popup__input_type_place"
+                name="place"
+                value=""
+                placeholder="Название"
+                minlength="2"
+                maxlength="40"
+                required
+              />
+              <input
+                type="url"
+                class="popup__input popup__input_type_url"
+                name="url"
+                value=""
+                placeholder="Ссылка на картинку"
+                required
+              />
+              <button class="popup__save-button" type="submit">Создать</button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
     </div>
+    <!-- Template карточка -->
     <template class="template-card">
       <li class="elements__card">
         <img
