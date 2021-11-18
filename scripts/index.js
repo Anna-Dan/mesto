@@ -14,6 +14,11 @@ const saveAddButton = popupAddElement.querySelector(".popup__save-button");
 const formAddElement = document.querySelector(".popup__form_type_add");
 const placeInput = formAddElement.querySelector(".popup__input_type_place");
 const urlInput = formAddElement.querySelector(".popup__input_type_url");
+// Zoom popup
+// const popupZoomElement = document.querySelector(".popup_type_zoom");
+// const closeZoomButton = popupZoomElement.querySelector(".popup__close-button");
+// const figureImage = popupZoomElement.querySelector(".popup__figure-image");
+// const figcaption = popupZoomElement.querySelector(".popup__figcaption");
 // Профиль
 const profile = document.querySelector(".profile");
 const addButton = profile.querySelector(".profile__add-button");
@@ -23,6 +28,15 @@ const profileDescription = profile.querySelector(".profile__description");
 // Карточка
 const elementsList = document.querySelector(".elements__list");
 const cardTemplate = document.querySelector(".template-card");
+
+// Функция открытие попапа
+function openPopup(popupElement) {
+  popupElement.classList.add("popup_opened");
+}
+// Функция закрытие попапа
+function closePopup(popupElement) {
+  popupElement.classList.remove("popup_opened");
+}
 
 // Первоначальное отображение 6 карточек
 const initialCards = [
@@ -58,7 +72,38 @@ const createElementDomNode = (item) => {
     .cloneNode(true);
 
   cardElement.querySelector(".elements__image").src = item.link;
+  cardElement.querySelector(".elements__image").alt = item.name;
   cardElement.querySelector(".elements__title").textContent = item.name;
+
+  // Zoom
+  const popupZoomElement = document.querySelector(".popup_type_zoom");
+  const closeZoomButton = popupZoomElement.querySelector(".popup__close-button");
+  const figureImage = popupZoomElement.querySelector(".popup__figure-image");
+  const figcaption = popupZoomElement.querySelector(".popup__figcaption");
+
+  cardElement
+    .querySelector(".elements__image")
+    .addEventListener("click", (evt) => {
+
+    figureImage.src = evt.target.src;
+    figureImage.alt = evt.target.alt;
+    figcaption.textContent = evt.target.alt;
+
+
+    console.log (evt.target.src);
+    console.log (evt.target.alt);
+
+
+      openPopup(popupZoomElement);
+
+    });
+
+ // Закрыть zoom попап
+
+ closeZoomButton.addEventListener("click", () => {
+  closePopup(popupZoomElement);
+});
+
   // Лайк
   cardElement
     .querySelector(".elements__like-button")
@@ -72,6 +117,7 @@ const createElementDomNode = (item) => {
       cardElement.remove();
     });
 
+
   return cardElement;
 };
 
@@ -80,15 +126,6 @@ const initialRendering = initialCards.map((item) => {
 });
 
 elementsList.append(...initialRendering);
-
-// Функция открытие попапа
-function openPopup(popupElement) {
-  popupElement.classList.add("popup_opened");
-}
-// Функция закрытие попапа
-function closePopup(popupElement) {
-  popupElement.classList.remove("popup_opened");
-}
 
 //  EDIT POPUP
 // Заполнение данными со страницы при открытии формы редактирования профиля
