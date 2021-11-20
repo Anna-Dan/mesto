@@ -19,6 +19,7 @@ const popupZoomElement = document.querySelector(".popup_type_zoom");
 const closeZoomButton = popupZoomElement.querySelector(".popup__close-button");
 const figureImage = popupZoomElement.querySelector(".popup__figure-image");
 const figcaption = popupZoomElement.querySelector(".popup__figcaption");
+
 // Профиль
 const profile = document.querySelector(".profile");
 const addButton = profile.querySelector(".profile__add-button");
@@ -28,33 +29,6 @@ const profileDescription = profile.querySelector(".profile__description");
 // Карточка
 const elementsList = document.querySelector(".elements__list");
 const cardTemplate = document.querySelector(".template-card");
-// 6 карточек
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
 
 // Функция открытие попапа
 function openPopup(popupElement) {
@@ -64,47 +38,48 @@ function openPopup(popupElement) {
 function closePopup(popupElement) {
   popupElement.classList.remove("popup_opened");
 }
+// Функция заполнения Zoom попапа
+function ZoomPopup(evt) {
+  figureImage.src = evt.target.src;
+  figureImage.alt = evt.target.alt;
+  figcaption.textContent = evt.target.alt;
+  openPopup(popupZoomElement);
+}
+// Функция лайка
+function likeCard(evt) {
+  evt.target.classList.toggle("elements__like-button_active");
+}
 
 // Функция создания карточки
 const createElementDomNode = (item) => {
   const cardElement = cardTemplate.content
     .querySelector(".elements__card")
     .cloneNode(true);
-
-  cardElement.querySelector(".elements__image").src = item.link;
-  cardElement.querySelector(".elements__image").alt = item.name;
-  cardElement.querySelector(".elements__title").textContent = item.name;
-
+  // Переменные карточки
+  const cardImage = cardElement.querySelector(".elements__image");
+  const cardTitle = cardElement.querySelector(".elements__title");
+  const likeButton = cardElement.querySelector(".elements__like-button");
+  const deleteButton = cardElement.querySelector(".elements__delete-button");
+  // Заполнение карточки
+  cardImage.src = item.link;
+  cardImage.alt = item.name;
+  cardTitle.textContent = item.name;
   // Zoom
-  cardElement
-    .querySelector(".elements__image")
-    .addEventListener("click", (evt) => {
-      figureImage.src = evt.target.src;
-      figureImage.alt = evt.target.alt;
-      figcaption.textContent = evt.target.alt;
-      openPopup(popupZoomElement);
-    });
-  // Закрыть zoom попап
-  closeZoomButton.addEventListener("click", () => {
-    closePopup(popupZoomElement);
-  });
-
+  cardImage.addEventListener("click", ZoomPopup);
   // Лайк
-  cardElement
-    .querySelector(".elements__like-button")
-    .addEventListener("click", (evt) => {
-      evt.target.classList.toggle("elements__like-button_active");
-    });
-
+  likeButton.addEventListener("click", likeCard);
   // Удаление
-  cardElement
-    .querySelector(".elements__delete-button")
-    .addEventListener("click", () => {
-      cardElement.remove();
-    });
+  deleteButton.addEventListener("click", () => {
+    cardElement.remove();
+  });
 
   return cardElement;
 };
+
+// Закрыть zoom попап
+closeZoomButton.addEventListener("click", () => {
+  closePopup(popupZoomElement);
+});
 
 // Первоначальное отображение 6 карточек
 const initialRendering = initialCards.map((item) => {
@@ -114,11 +89,10 @@ const initialRendering = initialCards.map((item) => {
 elementsList.append(...initialRendering);
 
 //  EDIT POPUP
-// Заполнение данными со страницы при открытии формы редактирования профиля
-nameInput.value = profileName.textContent;
-jobInput.value = profileDescription.textContent;
 // Открыть попап редактирования профиля
 editButton.addEventListener("click", () => {
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileDescription.textContent;
   openPopup(popupEditElement);
 });
 // Закрыть попап редактирования профиля

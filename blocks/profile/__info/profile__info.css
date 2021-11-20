@@ -1,8 +1,8 @@
 .profile__info {
-  max-width: calc(100% - 300px);
+  max-width: calc(100% - 320px);
   margin: 0 auto 0 30px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   flex-wrap: wrap;
 }
 
@@ -11,5 +11,6 @@
     max-width: 100%;
     margin: 26px 0 33px;
     justify-content: center;
+    align-items: center;
   }
 }
