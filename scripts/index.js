@@ -1,3 +1,5 @@
+// All popups
+const popupList = document.querySelectorAll(".popup");
 // Edit popup
 const popupEditElement = document.querySelector(".popup_type_edit");
 const closeEditButton = popupEditElement.querySelector(".popup__close-button");
@@ -30,27 +32,36 @@ const profileDescription = profile.querySelector(".profile__description");
 const elementsList = document.querySelector(".elements__list");
 const cardTemplate = document.querySelector(".template-card");
 
+// Функция закрытия попапа кликом по оверлей
+popupList.forEach((popup) => {
+  popup.addEventListener("click", (evt) => {
+    if (evt.target.classList.contains("popup_opened")) {
+      closePopup();
+    }
+  });
+});
+
 // Функция закрытия попапа по esc
 function closeByEsc(evt) {
-  if (evt.key == 'Escape') {
-      closePopup()
+  if (evt.key === "Escape") {
+    closePopup();
   }
 }
+
 // Функция открытие попапа
 function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
-  document.addEventListener('keydown', closeByEsc)
+  document.addEventListener("keydown", closeByEsc);
 }
 
 // Функция закрытие попапа
 function closePopup() {
-  const popup = document.querySelector('.popup_opened');
-  if (popup) {
-      popup.classList.remove('popup_opened')
-      document.removeEventListener('keydown', closeByEsc)
+  const popupOpened = document.querySelector(".popup_opened");
+  if (popupOpened) {
+    popupOpened.classList.remove("popup_opened");
+    document.removeEventListener("keydown", closeByEsc);
   }
-};
-
+}
 
 // Функция заполнения Zoom попапа
 function ZoomPopup(evt) {
@@ -59,6 +70,7 @@ function ZoomPopup(evt) {
   figcaption.textContent = evt.target.alt;
   openPopup(popupZoomElement);
 }
+
 // Функция лайка
 function likeCard(evt) {
   evt.target.classList.toggle("elements__like-button_active");
@@ -113,7 +125,6 @@ editButton.addEventListener("click", () => {
 closeEditButton.addEventListener("click", () => {
   closePopup();
 });
-
 // Обработчик сохранения данных пользователя
 function editSubmitHandler(evt) {
   evt.preventDefault();
@@ -135,7 +146,6 @@ addButton.addEventListener("click", () => {
 closeAddButton.addEventListener("click", () => {
   closePopup();
 });
-
 // Обработчик сохранения карточки места
 function addSubmitHandler(evt) {
   evt.preventDefault();
@@ -150,4 +160,3 @@ function addSubmitHandler(evt) {
 }
 // Сохранить карточку места
 formAddElement.addEventListener("submit", addSubmitHandler);
-
