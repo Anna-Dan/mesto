@@ -10,7 +10,7 @@ const jobInput = formEditElement.querySelector(
 );
 // Add popup
 const popupAddElement = document.querySelector(".popup_type_add");
-const saveAddButton = popupAddElement.querySelector(".popup__save-button");
+const saveAddButton = popupAddElement.querySelector(".popup__submit");
 const formAddElement = document.querySelector(".popup__form_type_add");
 const placeInput = formAddElement.querySelector(".popup__input_type_place");
 const urlInput = formAddElement.querySelector(".popup__input_type_url");
@@ -46,12 +46,7 @@ const initEditForm = () => {
 };
 
 // Функция открытие попапа
-function openPopup(popupElement, config) {
-  const { inputErrorClass, errorClass } = config;
-  const inputElements = popupElement.querySelectorAll(".popup__input");
-  inputElements.forEach((inputElement) =>
-    hideInputError(inputElement, { inputErrorClass, errorClass })
-  );
+function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
   document.addEventListener("keydown", closeByEsc);
 }
@@ -87,7 +82,7 @@ function ZoomPopup(evt) {
   figureImage.src = evt.target.src;
   figureImage.alt = evt.target.alt;
   figcaption.textContent = evt.target.alt;
-  openPopup(popupZoomElement, validationSettings);
+  openPopup(popupZoomElement);
 }
 
 // Функция лайка
@@ -133,7 +128,8 @@ elementsList.append(...initialRendering);
 editButton.addEventListener("click", () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
-  openPopup(popupEditElement, validationSettings);
+  openPopup(popupEditElement);
+  errorStateReset(popupEditElement, validationSettings);
 });
 
 // Обработчик сохранения данных пользователя
@@ -149,9 +145,10 @@ formEditElement.addEventListener("submit", editSubmitHandler);
 // ADD POPUP
 // Открыть попап добавления карточки места
 addButton.addEventListener("click", () => {
-  openPopup(popupAddElement, validationSettings);
+  openPopup(popupAddElement);
   placeInput.value = "";
   urlInput.value = "";
+  errorStateReset(popupAddElement, validationSettings);
 });
 
 // Обработчик сохранения карточки места
@@ -164,6 +161,10 @@ function addSubmitHandler(evt) {
   elementsList.prepend(userCardElement);
   placeInput.value = "";
   urlInput.value = "";
+  // Отключаем кнопку сабмита после добавления карточки
+  saveAddButton.classList.add("popup__submit_inactive");
+  saveAddButton.disabled = true;
+
   closePopup(popupAddElement);
 }
 // Сохранить карточку места

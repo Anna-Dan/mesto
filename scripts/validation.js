@@ -23,6 +23,15 @@ const hideInputError = (inputElement, { inputErrorClass, errorClass }) => {
   errorElement.textContent = "";
 };
 
+// Очищаем инпуты от ошибок
+ function errorStateReset(popupElement, config) {
+  const { inputErrorClass, errorClass } = config;
+  const inputElements = popupElement.querySelectorAll(".popup__input");
+  inputElements.forEach((inputElement) =>
+    hideInputError(inputElement, { inputErrorClass, errorClass })
+  );
+ }
+
 // Проверяем валидность инпутов
 const checkInputValidity = (inputElement, { inputErrorClass, errorClass }) => {
   if (!inputElement.validity.valid) {
