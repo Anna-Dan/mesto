@@ -56,24 +56,10 @@ function openPopup(popupElement, config) {
   document.addEventListener("keydown", closeByEsc);
 }
 
-// Функция открытие попапа
-function openPopup(popupElement, config) {
-  const { inputErrorClass, errorClass } = config;
-  const inputElements = popupElement.querySelectorAll(".popup__input");
-  inputElements.forEach((inputElement) =>
-    hideInputError(inputElement, { inputErrorClass, errorClass })
-  );
-  popupElement.classList.add("popup_opened");
-  document.addEventListener("keydown", closeByEsc);
-}
-
 // Функция закрытие попапа
-function closePopup() {
-  const popupOpened = document.querySelector(".popup_opened");
-  if (popupOpened) {
-    popupOpened.classList.remove("popup_opened");
-    document.removeEventListener("keydown", closeByEsc);
-  }
+function closePopup(popup) {
+  popup.classList.remove("popup_opened");
+  document.removeEventListener("keydown", closeByEsc);
 }
 
 // Функция закрытия попапа кликом по оверлей и кнопке закрытия
@@ -90,8 +76,9 @@ popupList.forEach((popup) => {
 
 // Функция закрытия попапа по esc
 function closeByEsc(evt) {
+  const popupOpened = document.querySelector(".popup_opened");
   if (evt.key === "Escape") {
-    closePopup();
+    closePopup(popupOpened);
   }
 }
 
@@ -154,7 +141,7 @@ function editSubmitHandler(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
-  closePopup();
+  closePopup(popupEditElement);
 }
 // Сохранить данные пользователя
 formEditElement.addEventListener("submit", editSubmitHandler);
@@ -177,7 +164,7 @@ function addSubmitHandler(evt) {
   elementsList.prepend(userCardElement);
   placeInput.value = "";
   urlInput.value = "";
-  closePopup();
+  closePopup(popupAddElement);
 }
 // Сохранить карточку места
 formAddElement.addEventListener("submit", addSubmitHandler);
