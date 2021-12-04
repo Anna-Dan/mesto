@@ -70,30 +70,34 @@
             novalidate
           >
             <fieldset class="popup__fieldset">
-              <input
-                id="name-input"
-                type="text"
-                class="popup__input popup__input_type_name"
-                name="name"
-                value=""
-                placeholder="Имя пользователя"
-                minlength="2"
-                maxlength="40"
-                required
-              />
-              <span class="popup__input-error name-input-error"></span>
-              <input
-                id="description-input"
-                type="text"
-                class="popup__input popup__input_type_description"
-                name="description"
-                value=""
-                placeholder="Описание пользователя"
-                minlength="2"
-                maxlength="200"
-                required
-              />
-              <span class="popup__input-error description-input-error"></span>
+              <div class="popup__input-container">
+                <input
+                  id="name-input"
+                  type="text"
+                  class="popup__input popup__input_type_name"
+                  name="name"
+                  value=""
+                  placeholder="Имя пользователя"
+                  minlength="2"
+                  maxlength="40"
+                  required
+                />
+                <span class="popup__input-error name-input-error"></span>
+              </div>
+              <div class="popup__input-container">
+                <input
+                  id="description-input"
+                  type="text"
+                  class="popup__input popup__input_type_description"
+                  name="description"
+                  value=""
+                  placeholder="Описание пользователя"
+                  minlength="2"
+                  maxlength="200"
+                  required
+                />
+                <span class="popup__input-error description-input-error"></span>
+              </div>
               <button class="popup__submit" type="submit">Сохранить</button>
             </fieldset>
           </form>
@@ -115,28 +119,32 @@
             novalidate
           >
             <fieldset class="popup__fieldset">
-              <input
-                id="place-input"
-                type="text"
-                class="popup__input popup__input_type_place"
-                name="place"
-                value=""
-                placeholder="Название"
-                minlength="2"
-                maxlength="30"
-                required
-              />
-              <span class="popup__input-error place-input-error"></span>
-              <input
-                id="url-input"
-                type="url"
-                class="popup__input popup__input_type_url"
-                name="url"
-                value=""
-                placeholder="Ссылка на картинку"
-                required
-              />
-              <span class="popup__input-error url-input-error"></span>
+              <div class="popup__input-container">
+                <input
+                  id="place-input"
+                  type="text"
+                  class="popup__input popup__input_type_place"
+                  name="place"
+                  value=""
+                  placeholder="Название"
+                  minlength="2"
+                  maxlength="30"
+                  required
+                />
+                <span class="popup__input-error place-input-error"></span>
+              </div>
+              <div class="popup__input-container">
+                <input
+                  id="url-input"
+                  type="url"
+                  class="popup__input popup__input_type_url"
+                  name="url"
+                  value=""
+                  placeholder="Ссылка на картинку"
+                  required
+                />
+                <span class="popup__input-error url-input-error"></span>
+              </div>
               <button class="popup__submit" type="submit">Создать</button>
             </fieldset>
           </form>
@@ -182,5 +190,6 @@
     </template>
     <script src="./scripts/cards.js"></script>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validation.js"></script>
   </body>
 </html>

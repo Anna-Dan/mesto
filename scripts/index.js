@@ -2,7 +2,6 @@
 const popupList = document.querySelectorAll(".popup");
 // Edit popup
 const popupEditElement = document.querySelector(".popup_type_edit");
-const closeEditButton = popupEditElement.querySelector(".popup__close-button");
 const saveEditButton = popupEditElement.querySelector(".popup__save-button");
 const formEditElement = document.querySelector(".popup__form_type_edit");
 const nameInput = formEditElement.querySelector(".popup__input_type_name");
@@ -11,14 +10,12 @@ const jobInput = formEditElement.querySelector(
 );
 // Add popup
 const popupAddElement = document.querySelector(".popup_type_add");
-const closeAddButton = popupAddElement.querySelector(".popup__close-button");
 const saveAddButton = popupAddElement.querySelector(".popup__save-button");
 const formAddElement = document.querySelector(".popup__form_type_add");
 const placeInput = formAddElement.querySelector(".popup__input_type_place");
 const urlInput = formAddElement.querySelector(".popup__input_type_url");
 // Zoom popup
 const popupZoomElement = document.querySelector(".popup_type_zoom");
-const closeZoomButton = popupZoomElement.querySelector(".popup__close-button");
 const figureImage = popupZoomElement.querySelector(".popup__figure-image");
 const figcaption = popupZoomElement.querySelector(".popup__figcaption");
 
@@ -32,24 +29,40 @@ const profileDescription = profile.querySelector(".profile__description");
 const elementsList = document.querySelector(".elements__list");
 const cardTemplate = document.querySelector(".template-card");
 
-// Функция закрытия попапа кликом по оверлей
-popupList.forEach((popup) => {
-  popup.addEventListener("click", (evt) => {
-    if (evt.target.classList.contains("popup_opened")) {
-      closePopup();
-    }
-  });
-});
+// Объект настроек для валидации
+const validationSettings = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__submit",
+  inactiveButtonClass: "popup__submit_inactive",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__input-error_active",
+};
 
-// Функция закрытия попапа по esc
-function closeByEsc(evt) {
-  if (evt.key === "Escape") {
-    closePopup();
-  }
+// Функция заполнения юзер-инфо перед валидацией
+const initEditForm = () => {
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileDescription.textContent;
+};
+
+// Функция открытие попапа
+function openPopup(popupElement, config) {
+  const { inputErrorClass, errorClass } = config;
+  const inputElements = popupElement.querySelectorAll(".popup__input");
+  inputElements.forEach((inputElement) =>
+    hideInputError(inputElement, { inputErrorClass, errorClass })
+  );
+  popupElement.classList.add("popup_opened");
+  document.addEventListener("keydown", closeByEsc);
 }
 
 // Функция открытие попапа
-function openPopup(popupElement) {
+function openPopup(popupElement, config) {
+  const { inputErrorClass, errorClass } = config;
+  const inputElements = popupElement.querySelectorAll(".popup__input");
+  inputElements.forEach((inputElement) =>
+    hideInputError(inputElement, { inputErrorClass, errorClass })
+  );
   popupElement.classList.add("popup_opened");
   document.addEventListener("keydown", closeByEsc);
 }
@@ -63,12 +76,31 @@ function closePopup() {
   }
 }
 
+// Функция закрытия попапа кликом по оверлей и кнопке закрытия
+popupList.forEach((popup) => {
+  popup.addEventListener("click", (evt) => {
+    if (
+      evt.target.classList.contains("popup__close-button") ||
+      evt.target.classList.contains("popup")
+    ) {
+      closePopup(popup);
+    }
+  });
+});
+
+// Функция закрытия попапа по esc
+function closeByEsc(evt) {
+  if (evt.key === "Escape") {
+    closePopup();
+  }
+}
+
 // Функция заполнения Zoom попапа
 function ZoomPopup(evt) {
   figureImage.src = evt.target.src;
   figureImage.alt = evt.target.alt;
   figcaption.textContent = evt.target.alt;
-  openPopup(popupZoomElement);
+  openPopup(popupZoomElement, validationSettings);
 }
 
 // Функция лайка
@@ -90,6 +122,7 @@ const createElementDomNode = (item) => {
   cardImage.src = item.link;
   cardImage.alt = item.name;
   cardTitle.textContent = item.name;
+
   // Zoom
   cardImage.addEventListener("click", ZoomPopup);
   // Лайк
@@ -102,16 +135,10 @@ const createElementDomNode = (item) => {
   return cardElement;
 };
 
-// Закрыть zoom попап
-closeZoomButton.addEventListener("click", () => {
-  closePopup();
-});
-
 // Первоначальное отображение 6 карточек
 const initialRendering = initialCards.map((item) => {
   return createElementDomNode(item);
 });
-
 elementsList.append(...initialRendering);
 
 //  EDIT POPUP
@@ -119,12 +146,9 @@ elementsList.append(...initialRendering);
 editButton.addEventListener("click", () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
-  openPopup(popupEditElement);
+  openPopup(popupEditElement, validationSettings);
 });
-// Закрыть попап редактирования профиля
-closeEditButton.addEventListener("click", () => {
-  closePopup();
-});
+
 // Обработчик сохранения данных пользователя
 function editSubmitHandler(evt) {
   evt.preventDefault();
@@ -138,14 +162,11 @@ formEditElement.addEventListener("submit", editSubmitHandler);
 // ADD POPUP
 // Открыть попап добавления карточки места
 addButton.addEventListener("click", () => {
-  openPopup(popupAddElement);
+  openPopup(popupAddElement, validationSettings);
   placeInput.value = "";
   urlInput.value = "";
 });
-// Закрыть попап добавления карточки места
-closeAddButton.addEventListener("click", () => {
-  closePopup();
-});
+
 // Обработчик сохранения карточки места
 function addSubmitHandler(evt) {
   evt.preventDefault();
