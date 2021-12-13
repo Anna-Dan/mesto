@@ -1,3 +1,27 @@
+const formEditElement = document.querySelector(".popup__form_type_edit");
+const nameInput = formEditElement.querySelector(".popup__input_type_name");
+const jobInput = formEditElement.querySelector(
+  ".popup__input_type_description"
+);
+const profile = document.querySelector(".profile");
+const profileName = profile.querySelector(".profile__name");
+const profileDescription = profile.querySelector(".profile__description");
+// Объект настроек для валидации
+ export const validationSettings = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__submit",
+  inactiveButtonClass: "popup__submit_inactive",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__input-error_active",
+};
+
+ const initEditForm = () => {
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileDescription.textContent;
+};
+
+
 // Заполняем юзер-инфо перед валидацией, что бы сабмит была активной при первом открытии попап
 initEditForm();
 
@@ -24,13 +48,13 @@ const hideInputError = (inputElement, { inputErrorClass, errorClass }) => {
 };
 
 // Очищаем инпуты от ошибок
- function errorStateReset(popupElement, config) {
+export function errorStateReset(popupElement, config) {
   const { inputErrorClass, errorClass } = config;
   const inputElements = popupElement.querySelectorAll(".popup__input");
   inputElements.forEach((inputElement) =>
     hideInputError(inputElement, { inputErrorClass, errorClass })
   );
- }
+}
 
 // Проверяем валидность инпутов
 const checkInputValidity = (inputElement, { inputErrorClass, errorClass }) => {
@@ -50,7 +74,10 @@ const hasInvalidInput = (inputList) => {
 
 // Переключение кнопки
 const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
-  buttonElement.classList.toggle(inactiveButtonClass, hasInvalidInput(inputList));
+  buttonElement.classList.toggle(
+    inactiveButtonClass,
+    hasInvalidInput(inputList)
+  );
   buttonElement.disabled = hasInvalidInput(inputList);
 };
 // Устанавливаем слушатели на все инпуты
@@ -93,3 +120,7 @@ const enableValidation = (validationSettings) => {
 
 // Запускаем валидацию
 enableValidation(validationSettings);
+
+
+
+
