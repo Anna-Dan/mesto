@@ -15,7 +15,7 @@ const profileDescription = profile.querySelector(".profile__description");
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__input-error_active",
 };
-
+// Функция заполнения юзер-инфо перед валидацией
  const initEditForm = () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
@@ -73,7 +73,7 @@ const hasInvalidInput = (inputList) => {
 };
 
 // Переключение кнопки
-const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
+export const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
   buttonElement.classList.toggle(
     inactiveButtonClass,
     hasInvalidInput(inputList)
