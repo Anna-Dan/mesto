@@ -1,10 +1,19 @@
 import { Card } from "./Card.js";
-import { initialCards } from "./constants.js";
-import {
-  errorStateReset,
-  validationSettings,
-  toggleButtonState,
-} from "./validation.js";
+import { initialCards, validationSettings } from "./constants.js";
+import { FormValidator } from "./validation.js";
+
+
+//Валидация форм
+// Находим формы в DOM
+const formEditPlaceElement = document.querySelector('.popup__form_type_edit');
+const formAddPlaceElement = document.querySelector('.popup__form_type_add');
+
+const editFormValidator = new FormValidator(validationSettings, formEditPlaceElement);
+const cardFormValidator = new FormValidator(validationSettings, formAddPlaceElement);
+
+editFormValidator.enableValidation();
+cardFormValidator.enableValidation();
+
 
 // All popups
 const popupList = document.querySelectorAll(".popup");
@@ -34,8 +43,26 @@ const editButton = profile.querySelector(".profile__edit-button");
 const profileName = profile.querySelector(".profile__name");
 const profileDescription = profile.querySelector(".profile__description");
 // Карточка
-const cardTemplate = document.querySelector(".template-card").content;
+
 const elementsList = document.querySelector(".elements__list");
+
+// Функция заполнения юзер-инфо перед валидацией
+const initEditForm = () => {
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileDescription.textContent;
+};
+
+// Заполняем юзер-инфо перед валидацией, что бы сабмит была активной при первом открытии попап
+initEditForm();
+
+// Очищаем инпуты от ошибок
+// function errorStateReset(popupElement, config) {
+//   const { inputErrorClass, errorClass } = config;
+//   const inputElements = popupElement.querySelectorAll(".popup__input");
+//   inputElements.forEach((inputElement) =>
+//     hideInputError(inputElement, { inputErrorClass, errorClass })
+//   );
+// }
 
 // Функция открытие попапа
 function openPopup(popupElement) {
@@ -74,7 +101,7 @@ editButton.addEventListener("click", () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
   openPopup(popupEditElement);
-  errorStateReset(popupEditElement, validationSettings);
+  //formEditPlaceElement.errorStateReset();
 });
 
 // Обработчик сохранения данных пользователя
@@ -89,7 +116,7 @@ formEditElement.addEventListener("submit", editSubmitHandler);
 
 // ф-я для передачи ссылки и подписи при открытии фуллскрин попапа
 
-function handleOpenImage(name, link) {
+function handleOpenPopup(name, link) {
   // ПЕРЕМЕННЫЕ ФУЛЛСКРИН ПОПАПА
   figureImage.src = link;
   figureImage.alt = name;
@@ -103,7 +130,7 @@ addButton.addEventListener("click", () => {
   openPopup(popupAddElement);
   placeInput.value = "";
   urlInput.value = "";
-  errorStateReset(popupAddElement, validationSettings);
+  //formAddPlaceElement.errorStateReset();
   // Отключаем кнопку сабмита после добавления карточки
   saveAddButton.classList.add("popup__submit_inactive");
   saveAddButton.disabled = true;
@@ -117,9 +144,12 @@ function insertCard(card) {
 
 // тут создаете карточку и возвращаете ее
 function createCard(item) {
-  // const cards = new Card(item.name, item.link, cardTemplate, handleOpenImage);
-
-  const cards = new Card(item.name, item.link, ".template-card", handleOpenImage);
+  const cards = new Card(
+    item.name,
+    item.link,
+    ".template-card",
+    handleOpenPopup
+  );
   const photo = cards.generateCard();
   return photo;
 }
