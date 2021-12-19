@@ -16,17 +16,22 @@ export class FormValidator {
     errorElement.classList.add(this._errorClass);
   };
   // Скрыть ошибку
-  hideInputError = (inputElement) => {
+  _hideInputError = (inputElement) => {
     const errorElement = this._form.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove(this._inputErrorClass);
     errorElement.classList.remove(this._errorClass);
     errorElement.textContent = "";
   };
-
+  // Очистить ошибки
+  resetError() {
+    this.inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+    });
+  }
   // Проверяем валидность инпутов
   _checkInputValidity(inputElement) {
     if (inputElement.validity.valid) {
-      this.hideInputError(inputElement);
+      this._hideInputError(inputElement);
     } else {
       this._showInputError(inputElement);
     }

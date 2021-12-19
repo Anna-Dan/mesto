@@ -39,9 +39,10 @@ function addCard(item) {
 }
 
 // Первоначальное отображение 6 карточек
-initialCards.forEach(function (item) {
-  addCard(item);
+const initialRendering = initialCards.map((item) => {
+  return createCard(item);
 });
+elementsList.append(...initialRendering);
 
 //Валидация форм
 const editFormValidator = new FormValidator(
@@ -76,8 +77,8 @@ popupList.forEach((popup) => {
 });
 // Функция закрытия попапа по esc
 function closeByEsc(evt) {
-  const popupOpened = document.querySelector(".popup_opened");
   if (evt.key === "Escape") {
+    const popupOpened = document.querySelector(".popup_opened");
     closePopup(popupOpened);
   }
 }
@@ -88,16 +89,17 @@ function handleOpenPopup(name, link) {
   figcaption.textContent = name;
   openPopup(popupZoomElement);
 }
+// Функция заполнения инпутов
+function addContent(input, source) {
+  input.value = source.textContent;
+}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  EDIT POPUP
 // Открыть попап редактирования профиля
 editButton.addEventListener("click", () => {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileDescription.textContent;
-  editFormValidator.activateSubmit();
-  editFormValidator.inputList.forEach((inputElement) =>
-    editFormValidator.hideInputError(inputElement)
-  );
+  addContent(nameInput, profileName);
+  addContent(jobInput, profileDescription);
+  editFormValidator.resetError();
   openPopup(popupEditElement);
 });
 // Обработчик сохранения данных пользователя
@@ -113,14 +115,10 @@ formEditElement.addEventListener("submit", editSubmitHandler);
 // ADD POPUP
 // Открыть попап добавления карточки места
 addButton.addEventListener("click", () => {
-  openPopup(popupAddElement);
-  placeInput.value = "";
-  urlInput.value = "";
-  addFormValidator.inputList.forEach((inputElement) =>
-    addFormValidator.hideInputError(inputElement)
-  );
-  // Отключаем кнопку сабмита после добавления карточки
+  formAddElement.reset();
+  addFormValidator.resetError();
   addFormValidator.deactivateSubmit();
+  openPopup(popupAddElement);
 });
 // Обработчик сохранения карточки места
 function addSubmitHandler(evt) {
@@ -130,8 +128,6 @@ function addSubmitHandler(evt) {
     link: urlInput.value,
   };
   addCard(userCardElement);
-  placeInput.value = "";
-  urlInput.value = "";
   closePopup(popupAddElement);
 }
 // Сохранить карточку места

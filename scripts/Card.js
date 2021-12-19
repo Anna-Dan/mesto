@@ -27,25 +27,27 @@ export class Card {
     return this._cardElement;
   }
   //Удаляем карточку
-  _deleteCard(evt) {
-    const cardToTrash = evt.target.closest(".elements__card");
-    cardToTrash.remove();
+  _deleteCard() {
+    this._cardElement.remove();
+    this._cardElement = null;
   }
   //Лайк
-  _likeCard(evt) {
-    evt.target.classList.toggle("elements__like-button_active");
+  _likeCard() {
+    this._cardElement
+      .querySelector(".elements__like-button")
+      .classList.toggle("elements__like-button_active");
   }
   //Устанавливаем слушатели
   _setEventListeners() {
     this._cardElement
       .querySelector(".elements__delete-button")
-      .addEventListener("click", (evt) => {
-        this._deleteCard(evt);
+      .addEventListener("click", () => {
+        this._deleteCard();
       });
     this._cardElement
       .querySelector(".elements__like-button")
-      .addEventListener("click", (evt) => {
-        this._likeCard(evt);
+      .addEventListener("click", () => {
+        this._likeCard();
       });
     this._cardElement
       .querySelector(".elements__image")
