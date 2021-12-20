@@ -16,6 +16,7 @@
 @import url(../blocks/profile/__add-button/profile__add-button.css);
 @import url(../blocks/profile/__name-container/profile__name-container.css);
 /* Элементы */
+@import url(../blocks/elements/elements.css);
 @import url(../blocks/elements/__list/elements__list.css);
 @import url(../blocks/elements/__card/elements__card.css);
 @import url(../blocks/elements/__delete-button/elements__delete-button.css);
