@@ -1,6 +1,9 @@
 export class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
+    this._handleEscClose = this._handleEscClose.bind(this);
+    this._popupContainer = this._popup.querySelector(".popup__container");
+    this._popupCloseButton = this._popup.querySelector(".popup__close-button");
   }
 
   open() {
@@ -22,8 +25,8 @@ export class Popup {
   setEventListeners() {
     this._popup.addEventListener("click", (evt) => {
       if (
-        evt.target.classList.contains("popup__close-button") ||
-        evt.target.classList.contains("popup")
+        evt.target === this._popupCloseButton ||
+        evt.target === this._popup
       ) {
         this.close();
       }

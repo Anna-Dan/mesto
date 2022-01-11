@@ -52,7 +52,7 @@ export class Card {
     this._cardElement
       .querySelector(".elements__image")
       .addEventListener("click", () => {
-        this._handleOpenPopup(this._name, this._link);
+        this._handleOpenPopup(this._link, this._name);
       });
   }
 }

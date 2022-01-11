@@ -39,7 +39,7 @@ export const validationSettings = {
 // All popups
 export const popupList = document.querySelectorAll(".popup");
 // Edit popup
-export const popupEditElement = document.querySelector(".popup_type_edit");
+export const popupEditElement = ".popup_type_edit";
 export const formEditElement = document.querySelector(".popup__form_type_edit");
 export const nameInput = formEditElement.querySelector(
   ".popup__input_type_name"
@@ -48,18 +48,18 @@ export const jobInput = formEditElement.querySelector(
   ".popup__input_type_description"
 );
 // Add popup
-export const popupAddElement = document.querySelector(".popup_type_add");
+export const popupAddElement = ".popup_type_add";
 export const formAddElement = document.querySelector(".popup__form_type_add");
 export const placeInput = formAddElement.querySelector(
   ".popup__input_type_place"
 );
 export const urlInput = formAddElement.querySelector(".popup__input_type_url");
 // Zoom popup
-export const popupZoomElement = document.querySelector(".popup_type_zoom");
-export const figureImage = popupZoomElement.querySelector(
+export const popupZoomElement = ".popup_type_zoom";
+export const figureImage = document.querySelector(
   ".popup__figure-image"
 );
-export const figcaption = popupZoomElement.querySelector(".popup__figcaption");
+export const figcaption = document.querySelector(".popup__figcaption");
 // Профиль
 export const profile = document.querySelector(".profile");
 export const addButton = profile.querySelector(".profile__add-button");
