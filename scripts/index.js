@@ -1,5 +1,6 @@
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
+import { Section } from "./Section.js";
 import {
   initialCards,
   validationSettings,
@@ -23,26 +24,51 @@ import {
 } from "./constants.js";
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Функция создания карточки
-function createCard(item) {
-  const cardElement = new Card(
-    item.name,
-    item.link,
-    ".template-card",
-    handleOpenPopup
-  );
-  const card = cardElement.generateCard();
-  return card;
-}
+// function createCard(item) {
+//   const cardElement = new Card(
+//     item.name,
+//     item.link,
+//     ".template-card",
+//     handleOpenPopup
+//   );
+//   const card = cardElement.generateCard();
+//   return card;
+// }
 //Функция добавления карточки
-function addCard(item) {
-  elementsList.prepend(createCard(item));
-}
+// function addCard(item) {
+//   elementsList.prepend(createCard(item));
+// }
 
 // Первоначальное отображение 6 карточек
-const initialRendering = initialCards.map((item) => {
-  return createCard(item);
-});
-elementsList.append(...initialRendering);
+// const initialRendering = initialCards.map((item) => {
+//   return createCard(item);
+// });
+// elementsList.append(...initialRendering);
+
+
+// рендерим массив карточек в общем контейнере places
+const cardList = new Section(
+  {
+  items: initialCards,
+  renderer: (item) => {
+    const cardElement = new Card(
+      item.name,
+      item.link,
+      ".template-card",
+      handleOpenPopup
+    );
+    const card = cardElement.generateCard();
+
+    cardList.addItem(card)
+  }
+},
+".elements__list");
+
+// рендерим все карточки разом.
+cardList.renderer();
+
+
+
 
 //Валидация форм
 const editFormValidator = new FormValidator(
@@ -127,7 +153,7 @@ function addSubmitHandler(evt) {
     name: placeInput.value,
     link: urlInput.value,
   };
-  addCard(userCardElement);
+  cardList.addItem(userCardElement);
   closePopup(popupAddElement);
 }
 // Сохранить карточку места
