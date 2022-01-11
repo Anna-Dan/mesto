@@ -45,30 +45,26 @@ import {
 // });
 // elementsList.append(...initialRendering);
 
-
-// рендерим массив карточек в общем контейнере places
+// Отрисовка карточек
 const cardList = new Section(
   {
-  items: initialCards,
-  renderer: (item) => {
-    const cardElement = new Card(
-      item.name,
-      item.link,
-      ".template-card",
-      handleOpenPopup
-    );
-    const card = cardElement.generateCard();
+    items: initialCards,
+    renderer: (item) => {
+      const cardElement = new Card(
+        item.name,
+        item.link,
+        ".template-card",
+        handleOpenPopup
+      );
+      const card = cardElement.generateCard();
 
-    cardList.addItem(card)
-  }
-},
-".elements__list");
+      cardList.addItem(card);
+    },
+  },
+  ".elements__list"
+);
 
-// рендерим все карточки разом.
 cardList.renderer();
-
-
-
 
 //Валидация форм
 const editFormValidator = new FormValidator(
@@ -80,34 +76,34 @@ editFormValidator.enableValidation();
 const addFormValidator = new FormValidator(validationSettings, formAddElement);
 addFormValidator.enableValidation();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Функция открытие попапа
-function openPopup(popupElement) {
-  popupElement.classList.add("popup_opened");
-  document.addEventListener("keydown", closeByEsc);
-}
-// Функция закрытие попапа
-function closePopup(popup) {
-  popup.classList.remove("popup_opened");
-  document.removeEventListener("keydown", closeByEsc);
-}
-// Функция закрытия попапа кликом по оверлей и кнопке закрытия
-popupList.forEach((popup) => {
-  popup.addEventListener("click", (evt) => {
-    if (
-      evt.target.classList.contains("popup__close-button") ||
-      evt.target.classList.contains("popup")
-    ) {
-      closePopup(popup);
-    }
-  });
-});
-// Функция закрытия попапа по esc
-function closeByEsc(evt) {
-  if (evt.key === "Escape") {
-    const popupOpened = document.querySelector(".popup_opened");
-    closePopup(popupOpened);
-  }
-}
+// // Функция открытие попапа
+// function openPopup(popupElement) {
+//   popupElement.classList.add("popup_opened");
+//   document.addEventListener("keydown", closeByEsc);
+// }
+// // Функция закрытие попапа
+// function closePopup(popup) {
+//   popup.classList.remove("popup_opened");
+//   document.removeEventListener("keydown", closeByEsc);
+// }
+// // Функция закрытия попапа кликом по оверлей и кнопке закрытия
+// popupList.forEach((popup) => {
+//   popup.addEventListener("click", (evt) => {
+//     if (
+//       evt.target.classList.contains("popup__close-button") ||
+//       evt.target.classList.contains("popup")
+//     ) {
+//       closePopup(popup);
+//     }
+//   });
+// });
+// // Функция закрытия попапа по esc
+// function closeByEsc(evt) {
+//   if (evt.key === "Escape") {
+//     const popupOpened = document.querySelector(".popup_opened");
+//     closePopup(popupOpened);
+//   }
+// }
 // Функция заполнения Zoom попапа
 function handleOpenPopup(name, link) {
   figureImage.src = link;
