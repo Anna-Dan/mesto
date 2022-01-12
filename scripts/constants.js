@@ -36,8 +36,6 @@ export const validationSettings = {
   errorClass: "popup__input-error_active",
 };
 
-// All popups
-export const popupList = document.querySelectorAll(".popup");
 // Edit popup
 export const popupEditElement = ".popup_type_edit";
 export const formEditElement = document.querySelector(".popup__form_type_edit");
@@ -50,23 +48,11 @@ export const jobInput = formEditElement.querySelector(
 // Add popup
 export const popupAddElement = ".popup_type_add";
 export const formAddElement = document.querySelector(".popup__form_type_add");
-export const placeInput = formAddElement.querySelector(
-  ".popup__input_type_place"
-);
-export const urlInput = formAddElement.querySelector(".popup__input_type_url");
+
 // Zoom popup
 export const popupZoomElement = ".popup_type_zoom";
-export const figureImage = document.querySelector(
-  ".popup__figure-image"
-);
-export const figcaption = document.querySelector(".popup__figcaption");
+
 // Профиль
 export const profile = document.querySelector(".profile");
 export const addButton = profile.querySelector(".profile__add-button");
 export const editButton = profile.querySelector(".profile__edit-button");
-export const profileName = profile.querySelector(".profile__name");
-export const profileDescription = profile.querySelector(
-  ".profile__description"
-);
-// Карточка
-export const elementsList = document.querySelector(".elements__list");
