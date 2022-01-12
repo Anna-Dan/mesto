@@ -2,7 +2,7 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="./pages/index.css" />
+
     <meta
       name="viewport"
       content="width=device-width, user-scalable=no, initial-scale=1.0"
@@ -16,14 +16,18 @@
     <div class="page__container">
       <!-- HEADER -->
       <header class="header">
-        <img class="header__logo" src="./images/logo.svg" alt="Логотип сайта" />
+        <img
+          class="header__logo"
+          src="<%=require('./images/logo.svg')%>"
+          alt="Логотип сайта"
+        />
       </header>
       <main class="content">
         <!-- PROFILE -->
         <section class="profile">
           <img
             class="profile__photo"
-            src="./images/profile-photo.jpg"
+            src="<%=require('./images/profile-photo.jpg')%>"
             alt="аватар профиля"
           />
           <div class="profile__info">
@@ -188,6 +192,5 @@
         </div>
       </li>
     </template>
-    <script type="module" src="./scripts/index.js"></script>
   </body>
 </html>
