@@ -18,18 +18,22 @@ import {
   popupZoomElement,
   addButton,
   editButton,
-} from "../components/constants.js";
+  templateCard,
+  elementsList,
+  profileName,
+  profileDescription,
+} from "../utils/constants.js";
 
 // Функция создания карточки
 function createCard(item) {
   const cardElement = new Card(
     item.name,
     item.link,
-    ".template-card",
+    templateCard,
     handleOpenPopup
   );
   const card = cardElement.generateCard();
-  cardList.addItem(card);
+  return card;
 }
 
 // Отрисовка карточек
@@ -37,18 +41,18 @@ const cardList = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      createCard(item);
+      cardList.addItem(createCard(item));
     },
   },
-  ".elements__list"
+  elementsList
 );
 
-cardList.renderer();
+cardList.renderItems();
 
 // Профиль пользователя
 const userInfo = new UserInfo({
-  nameSelector: ".profile__name",
-  descriptionSelector: ".profile__description",
+  nameSelector: profileName,
+  descriptionSelector: profileDescription,
 });
 
 //Zoom popup
@@ -70,10 +74,10 @@ const addFormValidator = new FormValidator(validationSettings, formAddElement);
 addFormValidator.enableValidation();
 
 //Edit popup
-const popupEdit = new PopupWithForm(popupEditElement, {
+const popupEditProfile = new PopupWithForm(popupEditElement, {
   submitHandler: (inputValues) => {
     userInfo.setUserInfo(inputValues);
-    popupEdit.close();
+    popupEditProfile.close();
   },
 });
 // Открыть попап редактирования профиля
@@ -81,22 +85,24 @@ editButton.addEventListener("click", () => {
   nameInput.value = userInfo.getUserInfo().name;
   jobInput.value = userInfo.getUserInfo().job;
   editFormValidator.resetError();
-  popupEdit.open();
+  popupEditProfile.open();
 });
 
 // Add popup
-const popupAdd = new PopupWithForm(popupAddElement, {
+const popupAddCard = new PopupWithForm(popupAddElement, {
   submitHandler: (inputValues) => {
-    createCard(inputValues);
-    popupAdd.close();
+    cardList.addItem(createCard(inputValues));
+    popupAddCard.close();
   },
 });
 // Открыть попап добавления карточки места
 addButton.addEventListener("click", () => {
   addFormValidator.resetError();
   addFormValidator.deactivateSubmit();
-  popupAdd.open();
+  popupAddCard.open();
 });
 
 //Устанавливаем слушатели на все попапы
-[popupEdit, popupAdd, popupZoom].forEach((popup) => popup.setEventListeners());
+[popupEditProfile, popupAddCard, popupZoom].forEach((popup) =>
+  popup.setEventListeners()
+);

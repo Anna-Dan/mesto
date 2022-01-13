@@ -56,3 +56,9 @@ export const popupZoomElement = ".popup_type_zoom";
 export const profile = document.querySelector(".profile");
 export const addButton = profile.querySelector(".profile__add-button");
 export const editButton = profile.querySelector(".profile__edit-button");
+export const profileName = ".profile__name";
+export const profileDescription = ".profile__description";
+
+//Карточки
+export const templateCard = ".template-card";
+export const elementsList = ".elements__list";
