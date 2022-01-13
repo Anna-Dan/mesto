@@ -1,4 +1,4 @@
 node_modules
 dist 
-container-startup
-docker-startup
+container-startup.sh
+docker-startup.bat
