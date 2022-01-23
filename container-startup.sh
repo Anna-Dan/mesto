@@ -1,3 +1,3 @@
 #!/bin/sh
 apk update
-apk add nano
+apk add openssh git nano
