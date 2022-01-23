@@ -14,7 +14,12 @@ module.exports = {
   },
   mode: "development",
   devServer: {
-    static: path.resolve(__dirname, "./dist"),
+    static: {
+      directory: path.resolve(__dirname, "./dist"),
+      watch: {
+        usePolling: true,
+      },
+    },
     open: true,
     compress: true,
     port: 8080,
