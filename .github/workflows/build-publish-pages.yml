@@ -32,7 +32,6 @@ jobs:
       id-token: write
       contents: read
       pages: write
-      deployments: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -40,5 +39,3 @@ jobs:
       - name: Deploy artifact
         id: deployment
         uses: actions/deploy-pages@v1-beta
-        with:
-          artifact-name: github-pages
