@@ -14,21 +14,27 @@
   <body class="page">
     <div class="page__container">
       <!-- HEADER -->
-      <!-- <header class="header">
+      <header class="header">
         <img
           class="header__logo"
           src="<%=require('./images/logo.svg')%>"
           alt="Логотип сайта"
         />
-      </header> -->
+      </header>
       <main class="content">
         <!-- PROFILE -->
         <section class="profile">
-          <img
-            class="profile__photo"
-            src="<%=require('./images/profile-photo.jpg')%>"
-            alt="аватар профиля"
-          />
+          <button
+            type="button"
+            class="profile__photo-edit"
+            aria-label="Обновить аватар"
+          >
+            <img
+              class="profile__photo"
+              src="<%=require('./images/profile-photo.jpg')%>"
+              alt="аватар профиля"
+            />
+          </button>
           <div class="profile__info">
             <div class="profile__name-container">
               <h1 class="profile__name">Жан-Люк Пикар</h1>
@@ -169,7 +175,59 @@
         </div>
       </div>
     </div>
+    <!-- DELETE POPUP -->
+    <div class="popup popup_type_delete">
+      <div class="popup__container">
+        <button
+          class="popup__close-button"
+          type="button"
+          title="Закрыть окно"
+          aria-label="Закрыть"
+        ></button>
+        <h2 class="popup__title popup__title_type_delete">Вы уверены?</h2>
+        <form
+          class="popup__form popup__form_type_delete"
+          name="delete-form"
+          novalidate
+        >
+          <button class="popup__submit" type="submit">Да</button>
+        </form>
+      </div>
+    </div>
 
+    <!-- AVATAR POPUP -->
+    <div class="popup popup_type_avatar">
+      <div class="popup__container">
+        <button
+          class="popup__close-button"
+          type="button"
+          title="Закрыть окно"
+          aria-label="Закрыть"
+        ></button>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form
+          class="popup__form popup__form_type_avatar"
+          name="avatar-form"
+          novalidate
+        >
+          <fieldset class="popup__fieldset">
+            <div class="popup__input-container">
+              <input
+                id="avatar-input"
+                type="url"
+                class="popup__input popup__input_type_avatar"
+                name="avatar-link"
+                value=""
+                placeholder="Ссылка на аватар"
+                required
+              />
+              <span class="popup__input-error avatar-input-error"></span>
+            </div>
+            <button class="popup__submit" type="submit">Обновить</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
     <!-- TEMPLATE CARD -->
     <template class="template-card">
       <li class="elements__card">
@@ -182,12 +240,15 @@
         <img class="elements__image" src="#" alt="Описание" />
         <div class="elements__info-container">
           <h2 class="elements__title"></h2>
-          <button
-            class="elements__like-button"
-            type="button"
-            title="Нравится"
-            aria-label="Поставить лайк"
-          ></button>
+          <div class="elements__like-container">
+            <button
+              class="elements__like-button"
+              type="button"
+              title="Нравится"
+              aria-label="Поставить лайк"
+            ></button>
+            <p class="elements__like-count">2</p>
+          </div>
         </div>
       </li>
     </template>
