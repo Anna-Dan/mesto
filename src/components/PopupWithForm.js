@@ -28,4 +28,12 @@ export class PopupWithForm extends Popup {
       this._submitHandler(this._getInputValues());
     });
   }
+
+  renderLoading(isLoading = true) {
+    if (isLoading) {
+      this._saveButton.textContent = "Сохранение...";
+    } else {
+      this._saveButton.textContent = "Сохранить";
+    }
+  }
 }

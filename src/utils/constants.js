@@ -1,30 +1,30 @@
-//Массив карточек
-export const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
+// //Массив карточек
+// export const initialCards = [
+//   {
+//     name: "Архыз",
+//     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
+//   },
+//   {
+//     name: "Челябинская область",
+//     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
+//   },
+//   {
+//     name: "Иваново",
+//     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
+//   },
+//   {
+//     name: "Камчатка",
+//     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
+//   },
+//   {
+//     name: "Холмогорский район",
+//     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
+//   },
+//   {
+//     name: "Байкал",
+//     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
+//   },
+// ];
 
 // Объект настроек для валидации
 export const validationSettings = {
@@ -51,13 +51,22 @@ export const formAddElement = document.querySelector(".popup__form_type_add");
 
 // Zoom popup
 export const popupZoomElement = ".popup_type_zoom";
+// Avatar popup
+export const formAvatarElement = document.querySelector(
+  ".popup__form_type_avatar"
+);
+export const popupAvatarElement = ".popup_type_avatar";
 
+//Confirm popup
+export const popupConfirmElement = ".popup_type_delete";
 // Профиль
 export const profile = document.querySelector(".profile");
 export const addButton = profile.querySelector(".profile__add-button");
 export const editButton = profile.querySelector(".profile__edit-button");
+export const avatarButton = profile.querySelector(".profile__photo-edit");
 export const profileName = ".profile__name";
 export const profileDescription = ".profile__description";
+export const profileAvatar = ".profile__photo";
 
 //Карточки
 export const templateCard = ".template-card";
