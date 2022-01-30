@@ -1,6 +1,6 @@
 export class Section {
-  constructor({ renderer }, containerSelector) {
-    this._renderer = renderer;
+  constructor({ renderItems } , containerSelector) {
+    this._renderer = renderItems;
     this._container = document.querySelector(containerSelector);
   }
 
@@ -9,6 +9,7 @@ export class Section {
       this._renderer(item);
     });
   }
+
 
   //добавление новых карточек
   addNewItem(element) {

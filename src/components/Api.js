@@ -19,13 +19,17 @@ export class Api {
     }).then(this._checkResponse);
   }
 
-  getUserInfo() {
+  getProfileInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: this._headers,
     }).then(this._checkResponse);
   }
 
+  // данные для первоначальной отрисовки bio и карточек
+  getDefaultData() {
+    return Promise.all([this.getProfileInfo(), this.getInitialCards()]);
+  }
 
   updateUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {

@@ -7,7 +7,7 @@ export class PopupWithImage extends Popup {
     this._figcaption = document.querySelector(".popup__figcaption");
   }
 
-  open(name, link) {
+  open(link, name) {
     super.open();
     this._figureImage.src = link;
     this._figureImage.alt = name;

@@ -47,8 +47,6 @@ const avatarFormValidator = new FormValidator(
 );
 avatarFormValidator.enableValidation();
 
-let userId = "";
-
 // запросы к серверу
 const api = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-34",
@@ -58,6 +56,16 @@ const api = new Api({
   },
 });
 
+// Отрисовка карточек
+const cardList = new Section(
+  {
+    renderItems: (item) => {
+      cardList.addItem(createCard(item));
+    },
+  },
+  elementsList
+);
+
 // Профиль пользователя
 const userInfo = new UserInfo({
   nameSelector: profileName,
@@ -65,17 +73,81 @@ const userInfo = new UserInfo({
   avatarSelector: profileAvatar,
 });
 
-//первоначальные данные с сервера (bio и карточки)
-Promise.all([api.getUserInfo(), api.getInitialCards()])
-.then((res) => {
-  userId = res[1]._id;
-  cardList.renderItems(res[0]);
-  userInfo.setUserInfo(res[1]);
-})
-.catch((err) => {
-  console.log(err);
-});
+//отображаются мои карточки, работают все их функции
+let userId = "";
+Promise.all([api.getInitialCards(), api.getProfileInfo()])
+  .then((res) => {
+    userId = res[1]._id;
+    cardList.renderItems(res[0]);
+    userInfo.setUserInfo({
+      name: res[1].name,
+      about: res[1].about,
+    });
+    userInfo.setAvatar(res[1].avatar);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
+///////////////////////////////////////////////////////////////////////////////////////
+// let userId = "";
+// Promise.all([ api.getInitialCards(), api.getProfileInfo()])
+// .then((res) => {
+//   userId = res[1]._id;
+//   cardList.renderItems(res[0]);
+//   userInfo.setUserInfo(res[1]);
+
+// })
+// .catch((err) => {
+//   console.log(err);
+// });
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+// Promise.all([api.getProfileInfo(), api.getInitialCards()]).then((res) => {
+//   userInfo.setUserInfo({
+//     name: res[0].name,
+//     about: res[0].about,
+//     id: res[0]._id,
+//   });
+//   userInfo.setAvatar(res[0].avatar);
+//   res[1].forEach((item) =>
+//     cardList.renderItems(
+//       item,
+//       item.owner._id === userInfo.getID() ? true : false,
+//       Boolean(item.likes.find((item) => item._id == userInfo.getID()))
+//     )
+//   );
+// });
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// отображается верная инфа профиля
+// Promise.all([api.getProfileInfo(), api.getInitialCards()])
+//   .then((res) => {
+//     userInfo.setUserInfo({
+//       name: res[0].name,
+//       about: res[0].about,
+//       id: res[0]._id,
+//     });
+//     userInfo.setAvatar(res[0].avatar);
+//     cardList.renderItems(res[1]);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+//////////////////////////////////////////////////////////////////////////////
+// let userId = "";
+// Promise.all([api.getProfileInfo(), api.getInitialCards()])
+//   .then((res) => {
+//     userInfo.setUserInfo({
+//       name: res[0].name,
+//       about: res[0].about,
+//       userId: res[0]._id,
+//     });
+//     userInfo.setAvatar(res[0].avatar);
+//     cardList.renderItems(res[1]);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 // Функция создания карточки
 function createCard(item) {
   const cardElement = new Card(item, userId, templateCard, {
@@ -125,18 +197,6 @@ function createCard(item) {
   return cardElement.generateCard();
 }
 
-// Отрисовка карточек
-const cardList = new Section(
-  {
-    renderer: (item) => {
-      cardList.addItem(createCard(item));
-    },
-  },
-  elementsList
-);
-
-//cardList.renderItems();
-
 //Confirm popup
 const popupConfirm = new PopupWithConfirm(popupConfirmElement);
 
@@ -151,6 +211,7 @@ const popupZoom = new PopupWithImage(popupZoomElement);
 //Edit popup
 const popupEditProfile = new PopupWithForm(popupEditElement, {
   submitHandler: (inputValues) => {
+    popupEditProfile.renderLoading(true);
     api
       .updateUserInfo(inputValues)
       .then((data) => {
@@ -180,13 +241,12 @@ editButton.addEventListener("click", () => {
 //AVATAR
 //Форма редактирования аватара
 const popupAvatar = new PopupWithForm(popupAvatarElement, {
-  handleFormSubmit: (inputValues) => {
+  submitHandler: (inputValues) => {
+    popupAvatar.renderLoading(true);
     api
       .updateUserAvatar(inputValues)
       .then((res) => {
-        userInfo.setUserInfo({
-          name: res.name,
-          about: res.about,
+        userInfo.setAvatar({
           avatar: res.avatar,
         });
         popupAvatar.close();
@@ -210,6 +270,7 @@ avatarButton.addEventListener("click", () => {
 // Add popup
 const popupAddCard = new PopupWithForm(popupAddElement, {
   submitHandler: (inputValues) => {
+    popupAddCard.renderLoading(true);
     api
       .addCard(inputValues)
       .then((data) => {

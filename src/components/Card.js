@@ -18,12 +18,12 @@ export class Card {
   }
   //Копируем разметку
   _getTemplate() {
-    const cardElement = document
+    const cardItem = document
       .querySelector(this._templateSelector)
       .content.querySelector(".elements__card")
       .cloneNode(true);
 
-    return cardElement;
+    return cardItem;
   }
   //Создаем карточку
   generateCard() {
@@ -89,6 +89,8 @@ export class Card {
       .querySelector(".elements__delete-button")
       .addEventListener("click", () => {
         this._deleteCard(this._cardElement, this._cardId);
+    console.log(this._cardElement);
+    console.log(this._cardId);
       });
     this._cardElement
       .querySelector(".elements__like-button")
