@@ -85,13 +85,11 @@ export class Card {
 
   //Устанавливаем слушатели
   _setEventListeners() {
-    this._cardElement
-      .querySelector(".elements__delete-button")
-      .addEventListener("click", () => {
-        this._deleteCard(this._cardElement, this._cardId);
-    console.log(this._cardElement);
-    console.log(this._cardId);
-      });
+    // this._cardElement
+    //   .querySelector(".elements__delete-button")
+    //   .addEventListener("click", () => {
+    //     this._deleteCard(this._cardElement, this._cardId);
+    //   });
     this._cardElement
       .querySelector(".elements__like-button")
       .addEventListener("click", () => {
