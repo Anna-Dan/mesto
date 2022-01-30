@@ -18,11 +18,13 @@ jobs:
         run: |
           npm ci
           npm run build
+      - name: Prepare tar artifact to publish
+        run: tar --dereference --hard-dereference --directory dist/ -cvf artifact.tar .
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: github-pages
-          path: ./dist
+          path: ./artifact.tar
           if-no-files-found: warn
   deploy-to-pages:
     runs-on: ubuntu-latest
