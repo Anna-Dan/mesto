@@ -48,6 +48,4 @@ setUserInfo({name, about}) {
 setAvatar(avatarURL) {
   this._profileAvatar.src = avatarURL;
 }
-
-getID() {return this._id}
 }

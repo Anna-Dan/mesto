@@ -218,7 +218,6 @@ const popupEditProfile = new PopupWithForm(popupEditElement, {
         userInfo.setUserInfo({
           name: data.name,
           about: data.about,
-          avatar: data.avatar,
         });
         popupEditProfile.close();
       })
@@ -246,9 +245,7 @@ const popupAvatar = new PopupWithForm(popupAvatarElement, {
     api
       .updateUserAvatar(inputValues)
       .then((res) => {
-        userInfo.setAvatar({
-          avatar: res.avatar,
-        });
+        userInfo.setAvatar(res.avatar);
         popupAvatar.close();
       })
       .catch((err) => {
