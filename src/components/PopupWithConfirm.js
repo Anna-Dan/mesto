@@ -6,8 +6,7 @@ export class PopupWithConfirm extends Popup {
     this._popupForm = this._popup.querySelector(".popup__form");
   }
 
-  //колбэк для удаления карточки
-  newSubmitCallback(action) {
+  submitCallbackDelete(action) {
     this._handlerSubmitForm = action;
   }
 

@@ -9,7 +9,6 @@ import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
 import { PopupWithConfirm } from "../components/PopupWithConfirm.js";
 import {
-  initialCards,
   validationSettings,
   popupEditElement,
   formEditElement,
@@ -36,18 +35,19 @@ const editFormValidator = new FormValidator(
   validationSettings,
   formEditElement
 );
-editFormValidator.enableValidation();
 
 const addFormValidator = new FormValidator(validationSettings, formAddElement);
-addFormValidator.enableValidation();
 
 const avatarFormValidator = new FormValidator(
   validationSettings,
   formAvatarElement
 );
-avatarFormValidator.enableValidation();
+//Включить валидацию всех форм
+[editFormValidator, addFormValidator, avatarFormValidator].forEach(
+  (formValidator) => formValidator.enableValidation()
+);
 
-// запросы к серверу
+//Запросы к серверу
 const api = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-34",
   headers: {
@@ -55,6 +55,21 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
+//Загрузка инфо для отрисовки карточек и юзер-инфо
+let userId = "";
+Promise.all([api.getInitialCards(), api.getProfileInfo()])
+  .then((res) => {
+    userId = res[1]._id;
+    cardList.renderItems(res[0]);
+    userInfo.setUserInfo({
+      name: res[1].name,
+      about: res[1].about,
+    });
+    userInfo.setAvatar(res[1].avatar);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // Отрисовка карточек
 const cardList = new Section(
@@ -73,81 +88,6 @@ const userInfo = new UserInfo({
   avatarSelector: profileAvatar,
 });
 
-//отображаются мои карточки, работают все их функции
-let userId = "";
-Promise.all([api.getInitialCards(), api.getProfileInfo()])
-  .then((res) => {
-    userId = res[1]._id;
-    cardList.renderItems(res[0]);
-    userInfo.setUserInfo({
-      name: res[1].name,
-      about: res[1].about,
-    });
-    userInfo.setAvatar(res[1].avatar);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
-///////////////////////////////////////////////////////////////////////////////////////
-// let userId = "";
-// Promise.all([ api.getInitialCards(), api.getProfileInfo()])
-// .then((res) => {
-//   userId = res[1]._id;
-//   cardList.renderItems(res[0]);
-//   userInfo.setUserInfo(res[1]);
-
-// })
-// .catch((err) => {
-//   console.log(err);
-// });
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-// Promise.all([api.getProfileInfo(), api.getInitialCards()]).then((res) => {
-//   userInfo.setUserInfo({
-//     name: res[0].name,
-//     about: res[0].about,
-//     id: res[0]._id,
-//   });
-//   userInfo.setAvatar(res[0].avatar);
-//   res[1].forEach((item) =>
-//     cardList.renderItems(
-//       item,
-//       item.owner._id === userInfo.getID() ? true : false,
-//       Boolean(item.likes.find((item) => item._id == userInfo.getID()))
-//     )
-//   );
-// });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// отображается верная инфа профиля
-// Promise.all([api.getProfileInfo(), api.getInitialCards()])
-//   .then((res) => {
-//     userInfo.setUserInfo({
-//       name: res[0].name,
-//       about: res[0].about,
-//       id: res[0]._id,
-//     });
-//     userInfo.setAvatar(res[0].avatar);
-//     cardList.renderItems(res[1]);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
-//////////////////////////////////////////////////////////////////////////////
-// let userId = "";
-// Promise.all([api.getProfileInfo(), api.getInitialCards()])
-//   .then((res) => {
-//     userInfo.setUserInfo({
-//       name: res[0].name,
-//       about: res[0].about,
-//       userId: res[0]._id,
-//     });
-//     userInfo.setAvatar(res[0].avatar);
-//     cardList.renderItems(res[1]);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
 // Функция создания карточки
 function createCard(item) {
   const cardElement = new Card(item, userId, templateCard, {
@@ -155,7 +95,7 @@ function createCard(item) {
       popupZoom.open(item.link, item.name);
     },
     deleteCard: (card, cardId) => {
-      popupConfirm.newSubmitCallback((evt) => {
+      popupConfirm.submitCallbackDelete((evt) => {
         evt.preventDefault();
         api
           .deleteCard(cardId)
@@ -175,7 +115,7 @@ function createCard(item) {
         api
           .deleteLike(cardId)
           .then((data) => {
-            cardElement.unsetLike();
+            cardElement.removeLike();
             cardElement.likesCounter(data.likes);
           })
           .catch((err) => {
@@ -203,11 +143,6 @@ const popupConfirm = new PopupWithConfirm(popupConfirmElement);
 //Zoom popup
 const popupZoom = new PopupWithImage(popupZoomElement);
 
-// // Функция открытия Zoom popup
-// function handleOpenPopup(link, name) {
-//   popupZoom.open(name, link);
-// }
-
 //Edit popup
 const popupEditProfile = new PopupWithForm(popupEditElement, {
   submitHandler: (inputValues) => {
@@ -229,7 +164,7 @@ const popupEditProfile = new PopupWithForm(popupEditElement, {
       });
   },
 });
-// Открыть попап редактирования профиля
+//Открыть попап редактирования профиля
 editButton.addEventListener("click", () => {
   nameInput.value = userInfo.getUserInfo().name;
   jobInput.value = userInfo.getUserInfo().job;
@@ -237,8 +172,7 @@ editButton.addEventListener("click", () => {
   popupEditProfile.open();
 });
 
-//AVATAR
-//Форма редактирования аватара
+//Avatar popup
 const popupAvatar = new PopupWithForm(popupAvatarElement, {
   submitHandler: (inputValues) => {
     popupAvatar.renderLoading(true);
@@ -256,8 +190,7 @@ const popupAvatar = new PopupWithForm(popupAvatarElement, {
       });
   },
 });
-
-// открытие попапа редактирования аватара
+//Открыть попап редактирования аватара
 avatarButton.addEventListener("click", () => {
   avatarFormValidator.resetError();
   avatarFormValidator.deactivateSubmit();
@@ -289,7 +222,7 @@ addButton.addEventListener("click", () => {
   popupAddCard.open();
 });
 
-//Устанавливаем слушатели на все попапы
+//Установить слушатели на все попапы
 [popupEditProfile, popupAddCard, popupZoom, popupConfirm, popupAvatar].forEach(
   (popup) => popup.setEventListeners()
 );

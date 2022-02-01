@@ -16,7 +16,7 @@ export class Card {
     this._deleteCard = deleteCard;
     this._handleLikeClick = handleLikeClick;
   }
-  //Копируем разметку
+
   _getTemplate() {
     const cardItem = document
       .querySelector(this._templateSelector)
@@ -25,10 +25,12 @@ export class Card {
 
     return cardItem;
   }
-  //Создаем карточку
+
   generateCard() {
     this._cardElement = this._getTemplate();
-    this._likeButton = this._cardElement.querySelector(".elements__like-button");
+    this._likeButton = this._cardElement.querySelector(
+      ".elements__like-button"
+    );
     if (this._userId != this._cardOwnerId) {
       this._cardElement.querySelector(".elements__delete-button").remove();
     }
@@ -46,20 +48,15 @@ export class Card {
     return this._cardElement;
   }
 
-  _isLiked(){
+  _isLiked() {
     this._likes.forEach((user) => {
       if (user._id === this._userId) {
-        this._likeButton.classList.add("elements__like-button_active")
+        this._likeButton.classList.add("elements__like-button_active");
         this.isLiked = true;
       }
-    })
+    });
   }
-  // // //Удаляем карточку
-  // removeCard() {
-  //   this._cardElement.remove();
-  //   this._cardElement = null;
-  // }
-  //постановка лайка
+
   setLike() {
     this._cardElement
       .querySelector(".elements__like-button")
@@ -67,41 +64,18 @@ export class Card {
     this.isLiked = true;
   }
 
-  //снятие лайка
-  unsetLike() {
+  removeLike() {
     this._cardElement
       .querySelector(".elements__like-button")
       .classList.remove("elements__like-button_active");
     this.isLiked = false;
   }
 
-  // //проверка автора лайка
-  // _checkUserLike() {
-  //   return this._likes.some((item) => item._id === this._currentUserId);
- // }
-
-  //проверка состояние лайка
-  // _toggleLikeState() {
-  //   if (this._checkUserLike()) {
-  //     this.setLike();
-  //   } else {
-  //     this.unsetLike();
-  //   }
-  // }
-  _toggleLikeState() {
-    if (this. _isLiked()) {
-      this.setLike();
-    } else {
-      this.unsetLike();
-    }
-  }
-  //подсчет лайков
   likesCounter(data) {
     this._cardElement.querySelector(".elements__like-count").textContent =
       data.length;
   }
 
-  //Устанавливаем слушатели
   _setEventListeners() {
     if (this._userId === this._cardOwnerId) {
       this._cardElement

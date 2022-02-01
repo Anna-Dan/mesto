@@ -1,6 +1,5 @@
 export class Api {
   constructor({ baseUrl, headers }) {
-    // тело конструктора
     this._headers = headers;
     this._baseUrl = baseUrl;
   }
@@ -24,11 +23,6 @@ export class Api {
       method: "GET",
       headers: this._headers,
     }).then(this._checkResponse);
-  }
-
-  // данные для первоначальной отрисовки bio и карточек
-  getDefaultData() {
-    return Promise.all([this.getProfileInfo(), this.getInitialCards()]);
   }
 
   updateUserInfo(data) {

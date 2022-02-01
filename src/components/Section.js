@@ -1,5 +1,5 @@
 export class Section {
-  constructor({ renderItems } , containerSelector) {
+  constructor({ renderItems }, containerSelector) {
     this._renderer = renderItems;
     this._container = document.querySelector(containerSelector);
   }
@@ -10,13 +10,12 @@ export class Section {
     });
   }
 
-
   //добавление новых карточек
   addNewItem(element) {
     this._container.prepend(element);
   }
 
-  //добавление карточек при отрисовке
+  //добавление карточек при загрузке
   addItem(element) {
     this._container.append(element);
   }
