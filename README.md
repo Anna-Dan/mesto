@@ -25,7 +25,7 @@
 Клонируйте репозиторий
 
 ```bash
-  https://github.com/Anna-Dan/mesto.git
+  git clone https://github.com/Anna-Dan/mesto.git
 ```
 
 Перейдите в директорию проекта
