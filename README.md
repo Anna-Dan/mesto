@@ -1,25 +1,51 @@
-# **Проект: Место**
+# Mesto
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 
-Посмотреть [проект](https://anna-dan.github.io/mesto/)
+## Описание
 
-## Автор: Анна Даниленко
+Интерактивная фотогалерея. Адаптивная верстка. Реализована валидация форм, редактирование профиля пользователя - изменение имени, описания деятельности и аватара. Есть возможность добавления и удаления карточек. Фото можно лайкнуть и расмотреть в полноэкранном режиме.
 
-## _Интерактивная фотогалерея _
+## Применяемые технологии
 
-Проэкт выполнен в рамках практической части обучения в [Яндекс Практикум](https://practicum.yandex.ru/)
+– Semantic HTML layout
 
----
+– JavaScript
 
-В реализации применены:
+– BEM methodology
 
-- Флексбокс-верстка
-- Grid
-- Методология БЭМ
-- Адаптивная верстка
-- Файловая структура Nested
-- JavaScript
-- Webpack
+– Webpack
 
----
+– Работа с API
 
- [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
+
+## Локальная сборка и запуск проекта
+
+Клонируйте репозиторий
+
+```bash
+  https://github.com/Anna-Dan/mesto.git
+```
+
+Перейдите в директорию проекта
+
+```bash
+  cd mesto
+```
+
+Установите зависимости
+
+```bash
+  npm install
+```
+
+Запустите сборку проекта
+
+```bash
+  npm run dev
+```
+
+## Demo
+
+https://anna-dan.github.io/mesto/
